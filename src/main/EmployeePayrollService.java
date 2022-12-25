@@ -1,34 +1,40 @@
 package com.bridgelabz.fileio;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class EmployeePayrollService {
+	public enum IOService {
+		CONSOLE_IO, FILE_IO
+	}
 
-    Scanner scr = new Scanner(System.in);
-    ArrayList<EmployeePayroll> employeePayrolls = new ArrayList<>();
+	private final List<EmployeePayrollData> employeePayrollDataPayrollList;
 
-    public static void main(String[] args) {
-        EmployeePayrollService service = new EmployeePayrollService();
-        service.readData();
-        service.writeData();
+	public EmployeePayrollService(List<EmployeePayrollData> list) {
 
-    }
+		this.employeePayrollDataPayrollList = list;
+	}
 
-    public void readData(){
-        EmployeePayroll employeePayroll = new EmployeePayroll();
-        System.out.println("Enter Employee id: ");
-         employeePayroll.setId(scr.nextInt());
-        System.out.println("Enter Employee Name: ");
-        employeePayroll.setName(scr.next());
-        System.out.println("Enter Employee Salary: ");
-        employeePayroll.setSalary(scr.nextInt());
-        employeePayrolls.add(employeePayroll);
+	public PayrollService getPayrollServiceObject(IOService ioType) {
+		PayrollService payrollService = null;
+		if (IOService.FILE_IO.equals(ioType)) {
+			payrollService = new FileIOPayrollService();
+		}
+		return payrollService;
+	}
 
-    }
+	public void writeData(IOService ioType) {
+		PayrollService payrollService = getPayrollServiceObject(ioType);
+		payrollService.writeData(employeePayrollDataPayrollList);
+	}
 
-    public void writeData(){
-        System.out.println(employeePayrolls);
-    }
+	public void readData(IOService ioType) {
+		PayrollService payrollService = getPayrollServiceObject(ioType);
+		payrollService.readData();
+	}
+
+	public long countEntries(IOService ioType) {
+		PayrollService payrollService = getPayrollServiceObject(ioType);
+		return payrollService.countEntries();
+	}
 }
+
