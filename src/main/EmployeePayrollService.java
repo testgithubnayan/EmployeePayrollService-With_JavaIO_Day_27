@@ -15,7 +15,7 @@ public class EmployeePayrollService {
         service.writeData();
 
     }
-
+//read the data........
     public void readData(){
         EmployeePayroll employeePayroll = new EmployeePayroll();
         System.out.println("Enter Employee id: ");
@@ -27,7 +27,7 @@ public class EmployeePayrollService {
         employeePayrolls.add(employeePayroll);
 
     }
-
+//writing the data
     public void writeData(){
         System.out.println(employeePayrolls);
     }
